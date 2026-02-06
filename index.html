@@ -3,101 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Message for You</title>
+    <title>For Riya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
             margin: 0;
-            background-color: #ffe4e1;
-            font-family: 'Poppins', sans-serif;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            color: white;
             text-align: center;
-            padding: 20px;
         }
-        .container {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            max-width: 500px;
+
+        #container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+            max-width: 80%;
         }
-        img {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
-        h1 { color: #d63384; font-size: 1.8rem; }
-        .btn-group {
-            position: relative;
-            height: 120px;
-            margin-top: 20px;
-        }
+
+        h2 { font-weight: 300; margin-bottom: 30px; }
+
+        .buttons { display: flex; justify-content: center; gap: 20px; height: 50px; }
+
         button {
-            padding: 15px 35px;
-            font-size: 1.1rem;
-            border-radius: 50px;
+            padding: 10px 30px;
+            font-size: 1.2rem;
             border: none;
+            border-radius: 50px;
             cursor: pointer;
-            font-weight: bold;
+            transition: 0.3s;
         }
+
         #yesBtn { background-color: #ff4d6d; color: white; }
+        #yesBtn:hover { transform: scale(1.1); background-color: #ff758f; }
+
         #noBtn {
             background-color: #6c757d;
             color: white;
             position: absolute;
-            transition: all 0.3s ease;
         }
-        .poem {
-            font-style: italic;
-            color: #555;
-            line-height: 1.6;
-            margin-top: 15px;
+
+        #successMessage {
+            display: none;
+            animation: fadeIn 2s ease-in;
         }
-        .celebration { display: none; }
+
+        .poem { font-style: italic; margin-bottom: 20px; line-height: 1.6; }
+        .letter { font-size: 0.9rem; border-top: 1px solid white; pt: 15px; margin-top: 15px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="container" id="mainBox">
-        <img src="URL_OF_YOUR_CARTOON" alt="Us">
-        <h1 id="question">Will you be my Valentine? ❤️</h1>
-        <div class="btn-group">
-            <button id="yesBtn" onclick="celebrate()">YES</button>
-            <button id="noBtn" onmouseover="moveButton()">NO</button>
-        </div>
-    </div>
-
-    <div class="celebration" id="happyBox">
-        <div class="container">
-            <h1>Yay! I love you! 🥰</h1>
-            <div class="poem">
-                "A star's dying breath forms the gold in your rings,<br>
-                You’re the rarest of all universal things.<br>
-                More precious than nebulae painted in light,<br>
-                My world’s only wonder, my day and my night."
+    <div id="container">
+        <div id="main-content">
+            <h1>Hey Riya, the love of my life</h1>
+            <h2>Will you be my Valentine?</h2>
+            <div class="buttons">
+                <button id="yesBtn" onclick="showLove()">Yes</button>
+                <button id="noBtn" onmouseover="moveNo()">No</button>
             </div>
-            <p style="margin-top: 20px; font-weight: bold;">Check your Day 7 envelope! 💌</p>
+        </div>
+
+        <div id="successMessage">
+            <h1>Yay! ❤️</h1>
+            <p class="poem">
+                In a universe loud with stars, I still found you,<br>
+                Rarer than a blue moon, softer than first light.<br>
+                Every time you smile, my world bends closer,<br>
+                As if the cosmos whispered, this one is mine.
+            </p>
+            <div class="letter">
+                <p>Dearest Riya,</p>
+                <p>From the moment we met, my life changed for the better. You are my best friend, my rock, and my favorite person to share a laugh with. I am so lucky to walk through life by your side. Here's to us!</p>
+                <p>Forever yours.</p>
+            </div>
         </div>
     </div>
 
     <script>
-        function moveButton() {
+        function moveNo() {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
             const noBtn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
         }
 
-        function celebrate() {
-            document.getElementById('mainBox').style.display = 'none';
-            document.getElementById('happyBox').style.display = 'block';
-            document.body.style.backgroundColor = '#ffafcc';
+        function showLove() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
         }
     </script>
 </body>
