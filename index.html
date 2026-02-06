@@ -13,23 +13,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            /* Make sure your image is named background.jpg in GitHub */
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('background.jpg');
             background-size: cover;
             background-position: center;
             font-family: 'Quicksand', sans-serif;
-            overflow: hidden;
             color: white;
             text-align: center;
         }
 
         #container {
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            padding: 3rem;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.3);
-            max-width: 400px;
-            z-index: 1;
+            max-width: 450px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
 
         h1 {
@@ -41,34 +41,52 @@
 
         h2 { font-weight: 300; margin-bottom: 30px; font-size: 1.5rem; }
 
-        /* The Yes Button stays centered in the box */
-        #yesBtn {
-            padding: 15px 40px;
-            font-size: 1.4rem;
+        .buttons { 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+        }
+
+        button {
+            padding: 12px 35px;
+            font-size: 1.1rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: 0.3s;
-            background-color: #ff4d6d;
-            color: white;
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+        }
+
+        #yesBtn { 
+            background-color: #ff4d6d; 
+            color: white; 
             box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
         }
-        #yesBtn:hover { transform: scale(1.1); background-color: #ff758f; }
+        
+        #yesBtn:hover { 
+            transform: scale(1.1); 
+            background-color: #ff758f; 
+        }
 
-        /* The No Button starts far away in the bottom right corner */
         #noBtn {
-            background-color: #6c757d;
-            color: white;
-            padding: 10px 25px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            position: fixed; /* Fixed so it's relative to the screen, not the box */
-            bottom: 50px;
-            right: 50px;
-            transition: 0.1s; /* Faster movement */
-            z-index: 10;
+            background-color: #f8f9fa;
+            color: #6c757d;
+            cursor: not-allowed; /* Shows the 'disabled' cursor */
+            opacity: 0.8;
+        }
+
+        /* Shake animation for the No button */
+        .shake {
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
         }
 
         #successMessage {
@@ -76,10 +94,24 @@
             animation: fadeIn 1.5s ease-in;
         }
 
-        .poem { font-style: italic; margin-bottom: 20px; line-height: 1.6; font-size: 1.1rem; }
-        .letter { font-size: 0.95rem; border-top: 1px solid rgba(255,255,255,0.5); padding-top: 15px; margin-top: 15px; }
+        .poem { 
+            font-style: italic; 
+            margin: 20px 0; 
+            line-height: 1.6; 
+            font-size: 1.1rem;
+            color: #ffe5ec;
+        }
+        
+        .letter { 
+            font-size: 0.95rem; 
+            border-top: 1px solid rgba(255,255,255,0.4); 
+            padding-top: 20px; 
+            margin-top: 20px; 
+            text-align: left;
+            line-height: 1.5;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -87,8 +119,11 @@
     <div id="container">
         <div id="main-content">
             <h1>Hey Riya, the love of my life</h1>
-            <h2>will you be my valentine?</h2>
-            <button id="yesBtn" onclick="showLove()">Yes</button>
+            <h2>Will you be my Valentine?</h2>
+            <div class="buttons">
+                <button id="yesBtn" onclick="showLove()">Yes</button>
+                <button id="noBtn" onclick="disableNo()">No</button>
+            </div>
         </div>
 
         <div id="successMessage">
@@ -101,33 +136,26 @@
             </p>
             <div class="letter">
                 <p>Dearest Riya,</p>
-                <p>From the moment we met, my life changed for the better. You are my best friend, my rock, and my favorite person to share a laugh with. I am so lucky to walk through life by your side. Here's to us!</p>
+                <p>From the moment we met, my life changed for the better. You are my best friend, my rock, and my favorite person to share a laugh with. I am so lucky to walk through life by your side.</p>
                 <p>Forever yours.</p>
             </div>
         </div>
     </div>
 
-    <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
-
     <script>
-        function moveNo() {
-            // Get screen dimensions minus button size to keep it on screen
-            const padding = 100;
-            const x = Math.random() * (window.innerWidth - padding);
-            const y = Math.random() * (window.innerHeight - padding);
-            
+        function disableNo() {
             const noBtn = document.getElementById('noBtn');
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-            noBtn.style.bottom = 'auto'; // Disable the initial bottom/right
-            noBtn.style.right = 'auto';
+            // Add shake class
+            noBtn.classList.add('shake');
+            // Remove it after animation so it can be triggered again
+            setTimeout(() => {
+                noBtn.classList.remove('shake');
+            }, 400);
         }
 
         function showLove() {
             document.getElementById('main-content').style.display = 'none';
-            document.getElementById('noBtn').style.display = 'none'; // Hide the "No" button forever
             document.getElementById('successMessage').style.display = 'block';
-            document.getElementById('container').style.maxWidth = '600px'; // Expand box for the letter
         }
     </script>
 </body>
