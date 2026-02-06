@@ -25,48 +25,59 @@
         #container {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.3);
-            max-width: 80%;
+            max-width: 400px;
+            z-index: 1;
         }
 
         h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        h2 { font-weight: 300; margin-bottom: 30px; }
+        h2 { font-weight: 300; margin-bottom: 30px; font-size: 1.5rem; }
 
-        .buttons { display: flex; justify-content: center; gap: 20px; height: 50px; }
-
-        button {
-            padding: 10px 30px;
-            font-size: 1.2rem;
+        /* The Yes Button stays centered in the box */
+        #yesBtn {
+            padding: 15px 40px;
+            font-size: 1.4rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
+            background-color: #ff4d6d;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
         }
-
-        #yesBtn { background-color: #ff4d6d; color: white; }
         #yesBtn:hover { transform: scale(1.1); background-color: #ff758f; }
 
+        /* The No Button starts far away in the bottom right corner */
         #noBtn {
             background-color: #6c757d;
             color: white;
-            position: absolute;
+            padding: 10px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            position: fixed; /* Fixed so it's relative to the screen, not the box */
+            bottom: 50px;
+            right: 50px;
+            transition: 0.1s; /* Faster movement */
+            z-index: 10;
         }
 
         #successMessage {
             display: none;
-            animation: fadeIn 2s ease-in;
+            animation: fadeIn 1.5s ease-in;
         }
 
-        .poem { font-style: italic; margin-bottom: 20px; line-height: 1.6; }
-        .letter { font-size: 0.9rem; border-top: 1px solid white; pt: 15px; margin-top: 15px; }
+        .poem { font-style: italic; margin-bottom: 20px; line-height: 1.6; font-size: 1.1rem; }
+        .letter { font-size: 0.95rem; border-top: 1px solid rgba(255,255,255,0.5); padding-top: 15px; margin-top: 15px; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -76,11 +87,8 @@
     <div id="container">
         <div id="main-content">
             <h1>Hey Riya, the love of my life</h1>
-            <h2>Will you be my Valentine?</h2>
-            <div class="buttons">
-                <button id="yesBtn" onclick="showLove()">Yes</button>
-                <button id="noBtn" onmouseover="moveNo()">No</button>
-            </div>
+            <h2>will you be my valentine?</h2>
+            <button id="yesBtn" onclick="showLove()">Yes</button>
         </div>
 
         <div id="successMessage">
@@ -99,18 +107,27 @@
         </div>
     </div>
 
+    <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
+
     <script>
         function moveNo() {
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
+            // Get screen dimensions minus button size to keep it on screen
+            const padding = 100;
+            const x = Math.random() * (window.innerWidth - padding);
+            const y = Math.random() * (window.innerHeight - padding);
+            
             const noBtn = document.getElementById('noBtn');
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
+            noBtn.style.bottom = 'auto'; // Disable the initial bottom/right
+            noBtn.style.right = 'auto';
         }
 
         function showLove() {
             document.getElementById('main-content').style.display = 'none';
+            document.getElementById('noBtn').style.display = 'none'; // Hide the "No" button forever
             document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('container').style.maxWidth = '600px'; // Expand box for the letter
         }
     </script>
 </body>
