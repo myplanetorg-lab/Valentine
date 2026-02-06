@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Message for You</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffe4e1;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+        img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        h1 { color: #d63384; font-size: 1.8rem; }
+        .btn-group {
+            position: relative;
+            height: 120px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn {
+            background-color: #6c757d;
+            color: white;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+        .poem {
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+        .celebration { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainBox">
+        <img src="URL_OF_YOUR_CARTOON" alt="Us">
+        <h1 id="question">Will you be my Valentine? ❤️</h1>
+        <div class="btn-group">
+            <button id="yesBtn" onclick="celebrate()">YES</button>
+            <button id="noBtn" onmouseover="moveButton()">NO</button>
+        </div>
+    </div>
+
+    <div class="celebration" id="happyBox">
+        <div class="container">
+            <h1>Yay! I love you! 🥰</h1>
+            <div class="poem">
+                "A star's dying breath forms the gold in your rings,<br>
+                You’re the rarest of all universal things.<br>
+                More precious than nebulae painted in light,<br>
+                My world’s only wonder, my day and my night."
+            </div>
+            <p style="margin-top: 20px; font-weight: bold;">Check your Day 7 envelope! 💌</p>
+        </div>
+    </div>
+
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function celebrate() {
+            document.getElementById('mainBox').style.display = 'none';
+            document.getElementById('happyBox').style.display = 'block';
+            document.body.style.backgroundColor = '#ffafcc';
+        }
+    </script>
+</body>
+</html>
